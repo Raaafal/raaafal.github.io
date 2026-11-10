@@ -439,6 +439,11 @@ section {
   grid-column: 1 / -1;
 }
 
+/* break the list of languages between the names, not inside a Korean or Japanese one */
+.facts .wide span {
+  word-break: keep-all;
+}
+
 .final {
   text-align: center;
   padding-bottom: 48px;
