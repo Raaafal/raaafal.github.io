@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <title>Privacy Policy | BUILD &amp; RIDE</title>
 <meta name="description" content="Privacy policy of BUILD &amp; RIDE, the Android game: what stays on your device, what Google AdMob collects for ads, and your choices.">
@@ -13,6 +13,8 @@
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/open-sans-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="BUILD &amp; RIDE">
@@ -25,12 +27,13 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./"><img src="assets/img/icon-96.webp" srcset="assets/img/icon-96.webp 1x, assets/img/icon-192.webp 2x" width="40" height="40" alt="">BUILD &amp; RIDE</a>
+    <a class="brand" href="./"><img src="assets/img/icon-96.webp" srcset="assets/img/icon-96.webp 1x, assets/img/icon-192.webp 2x" width="36" height="36" alt="">BUILD &amp; RIDE</a>
     <nav aria-label="Main">
       <ul class="nav">
-        <li><a href="./#modes">Modes</a></li>
-        <li><a href="./#screenshots">Screenshots</a></li>
-        <li><a href="privacy.html" aria-current="page">Privacy</a></li>
+        <li class="sect"><a href="./#modes">Modes</a></li>
+        <li class="sect"><a href="./#screenshots">Screenshots</a></li>
+        <li class="sect"><a href="privacy.html" aria-current="page">Privacy</a></li>
+        <li class="lang"><a href="pl/" hreflang="pl" lang="pl">Polski</a></li>
       </ul>
     </nav>
   </div>
@@ -115,7 +118,10 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p>&copy; 2026 BUILD &amp; RIDE</p>
+    <div>
+      <p><a class="brand" href="./"><img src="assets/img/icon-96.webp" width="36" height="36" alt="" loading="lazy">BUILD &amp; RIDE</a></p>
+      <p class="small">&copy; 2026 BUILD &amp; RIDE &middot; Headings in Open Sans (<a href="assets/fonts/LICENSE.txt">Apache License 2.0</a>)</p>
+    </div>
     <ul>
       <li><a href="./">Home</a></li>
       <li><a href="https://github.com/Raaafal/raaafal.github.io/issues">Contact (GitHub Issues)</a></li>

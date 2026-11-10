@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <title>BUILD &amp; RIDE: Narysuj auto. Jedź nim.</title>
 <meta name="description" content="BUILD &amp; RIDE to gra fizyczna na Androida: narysuj dowolne auto, dodaj koła, dopalacze, pięści i wyrzutnię rakiet, a potem jedź nim przez rampy, rakiety, chybotliwe mosty i wielkie wybuchy.">
@@ -16,6 +16,8 @@
 <link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/open-sans-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="../assets/css/fonts.css">
 <link rel="stylesheet" href="../assets/css/site.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BUILD &amp; RIDE">
@@ -31,26 +33,45 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/></symbol>
+  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3.5v6M12 14.5v6M3.5 12h6M14.5 12h6"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h13l-2.5 4.5L18 13H5"/></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><path d="M2 18h4.5l4-7 3.5 4 3-5L22 18"/><path d="M2 21h20"/></symbol>
+  <symbol id="i-castle" viewBox="0 0 24 24"><path d="M4 21V10h3V7h2.5v3h5V7H17v3h3v11z"/><path d="M10 21v-4.5a2 2 0 0 1 4 0V21"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 1 1 17 0"/><path d="M12 17l4.5-5.5"/><path d="M6 17h1.5M16.5 17H18"/></symbol>
+  <symbol id="i-columns" viewBox="0 0 24 24"><rect x="4" y="3" width="5" height="7" rx="1"/><rect x="4" y="15" width="5" height="6" rx="1"/><rect x="15" y="3" width="5" height="4" rx="1"/><rect x="15" y="12" width="5" height="9" rx="1"/></symbol>
+  <symbol id="i-bridge" viewBox="0 0 24 24"><path d="M2 15h20"/><path d="M4 15c3-6.5 13-6.5 16 0"/><path d="M8 15v-3.6M12 15v-4.6M16 15v-3.6"/><path d="M4 15v5M20 15v5"/></symbol>
+  <symbol id="i-swords" viewBox="0 0 24 24"><path d="M4 4l11 11M13 17l4-4M16 16l3.5 3.5"/><path d="M20 4L9 15M7 13l4 4M8 16l-3.5 3.5"/></symbol>
+  <symbol id="i-burst" viewBox="0 0 24 24"><path d="M12 2.5l2 5.2 5-2.2-2.2 5 5.2 2-5.2 2 2.2 5-5-2.2-2 5.2-2-5.2-5 2.2 2.2-5-5.2-2 5.2-2-2.2-5 5 2.2z"/></symbol>
+  <symbol id="i-garage" viewBox="0 0 24 24"><path d="M3 21V9.5L12 4l9 5.5V21"/><path d="M7 21v-8h10v8M7 16.5h10"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M10.3 5.3 L10.7 2.9 L13.3 2.9 L13.7 5.3 L15.6 6.1 L17.5 4.7 L19.3 6.5 L17.9 8.4 L18.7 10.3 L21.1 10.7 L21.1 13.3 L18.7 13.7 L17.9 15.6 L19.3 17.5 L17.5 19.3 L15.6 17.9 L13.7 18.7 L13.3 21.1 L10.7 21.1 L10.3 18.7 L8.4 17.9 L6.5 19.3 L4.7 17.5 L6.1 15.6 L5.3 13.7 L2.9 13.3 L2.9 10.7 L5.3 10.3 L6.1 8.4 L4.7 6.5 L6.5 4.7 L8.4 6.1Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-spin" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 5v16M4 13h16M6.3 7.3l11.4 11.4M17.7 7.3L6.3 18.7"/><path d="M10 2h4l-2 3z"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3.2 2.8 14.8 0 18M12 3c-2.8 3.2-2.8 14.8 0 18"/></symbol>
+</svg>
 <a class="skip" href="#main">Przejdź do treści</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./"><img src="../assets/img/icon-96.webp" srcset="../assets/img/icon-96.webp 1x, ../assets/img/icon-192.webp 2x" width="40" height="40" alt="">BUILD &amp; RIDE</a>
+    <a class="brand" href="./"><img src="../assets/img/icon-96.webp" srcset="../assets/img/icon-96.webp 1x, ../assets/img/icon-192.webp 2x" width="36" height="36" alt="">BUILD &amp; RIDE</a>
     <nav aria-label="Menu">
       <ul class="nav">
-        <li><a href="#modes">Tryby</a></li>
-        <li><a href="#screenshots">Zrzuty ekranu</a></li>
-        <li><a href="../privacy.html" hreflang="en">Prywatność</a></li>
-        <li><a href="../" hreflang="en" lang="en">English</a></li>
+        <li class="sect"><a href="#modes">Tryby</a></li>
+        <li class="sect"><a href="#screenshots">Zrzuty ekranu</a></li>
+        <li class="sect"><a href="../privacy.html" hreflang="en">Prywatność</a></li>
+        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <section class="hero">
+  <section class="hero" aria-labelledby="title">
     <div class="wrap">
-      <h1><img src="../assets/img/feature-1024.webp" srcset="../assets/img/feature-640.webp 640w, ../assets/img/feature-1024.webp 1024w" sizes="(min-width: 1056px) 1024px, calc(100vw - 32px)" width="1024" height="500" fetchpriority="high" alt="BUILD &amp; RIDE: Draw a car. Ride it. (Narysuj auto. Jedź nim.)"></h1>
+      <p class="eyebrow">Gra fizyczna na Androida</p>
+      <h1 class="wordmark" id="title"><span>Build</span> <span>&amp; Ride</span></h1>
+      <p class="tagline">Narysuj auto. Jedź nim.</p>
       <p class="lead">Narysuj dowolne auto, jakie wymyślisz, dodaj koła i szalone części, a potem jedź nim przez rampy, rakiety, TNT, chybotliwe mosty i wielkie wybuchy&nbsp;&ndash; i nie daj rozbić silnika.</p>
       <div class="cta">
         <!-- Strony gry w Google Play jeszcze nie ma (2026-11-10). Gdy będzie, zamień poniższy span na:
@@ -60,25 +81,39 @@
         <a class="btn btn-ghost" href="#screenshots">Zobacz zrzuty ekranu</a>
       </div>
       <p class="note">Na telefony i tablety z Androidem.</p>
+      <figure class="showcase">
+        <div class="frame">
+          <picture>
+            <source type="image/webp" srcset="../assets/img/collage-960.webp 960w, ../assets/img/collage-1440.webp 1440w, ../assets/img/collage-1920.webp 1920w" sizes="(min-width: 1216px) 1154px, calc(100vw - 38px)">
+            <img src="../assets/img/collage-1920.jpg" width="1920" height="1080" fetchpriority="high" decoding="async" alt="Kolaż chwil z BUILD &amp; RIDE: projektowanie robota na gąsienicach z dwiema rękawicami bokserskimi i dziesiątki neonowych aut, które jadą, latają i wybuchają w trybach gry.">
+          </picture>
+        </div>
+      </figure>
     </div>
   </section>
 
   <section class="section" id="how" aria-labelledby="how-title">
     <div class="wrap">
-      <h2 id="how-title">Rysuj. Buduj. Jedź.</h2>
-      <p class="sub">Każde auto w grze to auto, które sam narysujesz.</p>
+      <div class="section-head">
+        <p class="kicker">Jak to działa</p>
+        <h2 id="how-title">Rysuj. Buduj. Jedź.</h2>
+        <p class="sub">Każde auto w grze to auto, które sam narysujesz.</p>
+      </div>
       <ol class="steps">
-        <li class="card">
+        <li class="step c-gold">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-pencil"/></svg></span>
           <span class="step-no">Krok 1</span>
           <h3>Rysuj</h3>
           <p>Narysuj jednym palcem nadwozie wokół silnika. Rekin, czołg, banan: co narysujesz, tym pojedziesz.</p>
         </li>
-        <li class="card">
+        <li class="step c-pink">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-wheel"/></svg></span>
           <span class="step-no">Krok 2</span>
           <h3>Buduj</h3>
           <p>Przeciągnij koła na spód nadwozia, a potem dodaj dopalacze, pięści, gąsienice, wyrzutnię rakiet oraz gumę, lód i klej. Chroń silnik: jeśli w coś uderzy, auto wybuchnie.</p>
         </li>
-        <li class="card">
+        <li class="step c-cyan">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-flag"/></svg></span>
           <span class="step-no">Krok 3</span>
           <h3>Jedź</h3>
           <p>Naciśnij play i patrz, jak twój rysunek ożywa w świecie fizyki pełnym ramp, rakiet, TNT, sprężystych mostów i wielkich wybuchów.</p>
@@ -89,42 +124,52 @@
 
   <section class="section" id="modes" aria-labelledby="modes-title">
     <div class="wrap">
-      <h2 id="modes-title">Tryby gry</h2>
-      <p class="sub">Każdy tryb wystawia twoje auto na inną próbę.</p>
+      <div class="section-head">
+        <p class="kicker">Tryby gry</p>
+        <h2 id="modes-title">Siedem prób dla twojego auta</h2>
+        <p class="sub">Każdy tryb wystawia twoje auto na inną próbę.</p>
+      </div>
       <ul class="modes">
-        <li class="card">
+        <li class="mode c-cyan">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-road"/></svg></span>
           <h3>Przygoda</h3>
-          <p class="tagline">Narysuj drogę, przejedź przez wszystko</p>
+          <p class="mode-tag">Narysuj drogę, przejedź przez wszystko</p>
           <p>Narysowane auto jedzie samo. Rysuj linie nad przepaściami i buduj rampy, omijaj rakiety, skrzynie i pułapki grawitacji.</p>
         </li>
-        <li class="card">
+        <li class="mode c-pink">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-castle"/></svg></span>
           <h3>Angry Cars</h3>
-          <p class="tagline">Wystrzel auto w wieże</p>
+          <p class="mode-tag">Wystrzel auto w wieże</p>
           <p>Ukształtuj rampę, ustaw prędkość, burz wieże i zbieraj wszystkie trofea. Dwa auta na poziom: wykorzystaj je dobrze.</p>
         </li>
-        <li class="card">
+        <li class="mode c-gold">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-gauge"/></svg></span>
           <h3>Rajd Śmierci</h3>
-          <p class="tagline">Gaz, hamulec, przetrwaj</p>
+          <p class="mode-tag">Gaz, hamulec, przetrwaj</p>
           <p>Ty prowadzisz, pedałami gazu i hamulca. Skacz nad przepaściami i wracaj na koła.</p>
         </li>
-        <li class="card">
+        <li class="mode c-violet">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-columns"/></svg></span>
           <h3>Flappy Car</h3>
-          <p class="tagline">Przeciśnij się między kolumnami</p>
+          <p class="mode-tag">Przeciśnij się między kolumnami</p>
           <p>Rysuj teren pod kołami. Małe auta się prześlizgną, duże utkną.</p>
         </li>
-        <li class="card">
+        <li class="mode c-cyan">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-bridge"/></svg></span>
           <h3>Chybotliwy Most</h3>
-          <p class="tagline">Sprężyste mosty, latające auta</p>
+          <p class="mode-tag">Sprężyste mosty, latające auta</p>
           <p>Zbuduj most ze sprężystych części. Ugina się, chwieje i odbija jak trampolina. Przeprowadź trzy auta na drugą stronę.</p>
         </li>
-        <li class="card">
+        <li class="mode c-pink">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-swords"/></svg></span>
           <h3>Arena bitew</h3>
-          <p class="tagline">Zbuduj auto i patrz, jak walczy</p>
+          <p class="mode-tag">Zbuduj auto i patrz, jak walczy</p>
           <p>Zaprojektuj auto na arenę i rywala. Walka toczy się sama; wygrywa, kto pierwszy zdobędzie trzy punkty.</p>
         </li>
-        <li class="card">
+        <li class="mode c-gold">
+          <span class="icon"><svg class="i" aria-hidden="true"><use href="#i-burst"/></svg></span>
           <h3>Wybuchowy Rajd</h3>
-          <p class="tagline">Rysuj drogę, celuj wyrzutnią, strzelaj!</p>
+          <p class="mode-tag">Rysuj drogę, celuj wyrzutnią, strzelaj!</p>
           <p>Rysuj drogę dla swojego auta, celuj z wyrzutni rakiet i wysadzaj TNT oraz wszystko, co blokuje drogę.</p>
         </li>
       </ul>
@@ -133,100 +178,108 @@
 
   <section class="section" id="screenshots" aria-labelledby="shots-title">
     <div class="wrap">
-      <h2 id="shots-title">Zrzuty ekranu</h2>
-      <p class="sub">Chwile z gry. Dotknij obrazka, aby zobaczyć go w dużym rozmiarze.</p>
-      <ul class="gallery">
+      <div class="section-head">
+        <p class="kicker">Zrzuty ekranu</p>
+        <h2 id="shots-title">Chwile z gry</h2>
+        <p class="sub">Dotknij obrazka, aby zobaczyć go w dużym rozmiarze.</p>
+      </div>
+      <ul class="gallery" tabindex="0" aria-label="Zrzuty ekranu">
         <li>
-          <figure>
-            <a href="../assets/img/shots/001-bat-battleship-1600.webp"><img src="../assets/img/shots/001-bat-battleship-640.webp" srcset="../assets/img/shots/001-bat-battleship-640.webp 640w, ../assets/img/shots/001-bat-battleship-960.webp 960w, ../assets/img/shots/001-bat-battleship-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Arena bitew, Zatop Pancernik"></a>
-            <figcaption><span class="tag">Arena bitew</span>Zatop Pancernik</figcaption>
+          <figure class="shot c-pink">
+            <a href="../assets/img/shots/001-bat-battleship-1600.webp"><img src="../assets/img/shots/001-bat-battleship-640.webp" srcset="../assets/img/shots/001-bat-battleship-640.webp 640w, ../assets/img/shots/001-bat-battleship-960.webp 960w, ../assets/img/shots/001-bat-battleship-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Arena bitew, Zatop Pancernik"></a>
+            <figcaption><span class="chip">Arena bitew</span>Zatop Pancernik</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/009-des-monster-1600.webp"><img src="../assets/img/shots/009-des-monster-640.webp" srcset="../assets/img/shots/009-des-monster-640.webp 640w, ../assets/img/shots/009-des-monster-960.webp 960w, ../assets/img/shots/009-des-monster-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Projekt auta, Monster truck z pięścią"></a>
-            <figcaption><span class="tag">Projekt auta</span>Monster truck z pięścią</figcaption>
+          <figure class="shot c-violet">
+            <a href="../assets/img/shots/009-des-monster-1600.webp"><img src="../assets/img/shots/009-des-monster-640.webp" srcset="../assets/img/shots/009-des-monster-640.webp 640w, ../assets/img/shots/009-des-monster-960.webp 960w, ../assets/img/shots/009-des-monster-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Projekt auta, Monster truck z pięścią"></a>
+            <figcaption><span class="chip">Projekt auta</span>Monster truck z pięścią</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/014-ang-hit4-1600.webp"><img src="../assets/img/shots/014-ang-hit4-640.webp" srcset="../assets/img/shots/014-ang-hit4-640.webp 640w, ../assets/img/shots/014-ang-hit4-960.webp 960w, ../assets/img/shots/014-ang-hit4-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Angry Cars, Wieże runą"></a>
-            <figcaption><span class="tag">Angry Cars</span>Wieże runą</figcaption>
+          <figure class="shot c-pink">
+            <a href="../assets/img/shots/014-ang-hit4-1600.webp"><img src="../assets/img/shots/014-ang-hit4-640.webp" srcset="../assets/img/shots/014-ang-hit4-640.webp 640w, ../assets/img/shots/014-ang-hit4-960.webp 960w, ../assets/img/shots/014-ang-hit4-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Angry Cars, Wieże runą"></a>
+            <figcaption><span class="chip">Angry Cars</span>Wieże runą</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/020-adv-collapse-1600.webp"><img src="../assets/img/shots/020-adv-collapse-640.webp" srcset="../assets/img/shots/020-adv-collapse-640.webp 640w, ../assets/img/shots/020-adv-collapse-960.webp 960w, ../assets/img/shots/020-adv-collapse-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Przygoda, Smok na kołach wysoko nad wysadzoną wieżą"></a>
-            <figcaption><span class="tag">Przygoda</span>Smok na kołach wysoko nad wysadzoną wieżą</figcaption>
+          <figure class="shot c-cyan">
+            <a href="../assets/img/shots/020-adv-collapse-1600.webp"><img src="../assets/img/shots/020-adv-collapse-640.webp" srcset="../assets/img/shots/020-adv-collapse-640.webp 640w, ../assets/img/shots/020-adv-collapse-960.webp 960w, ../assets/img/shots/020-adv-collapse-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Przygoda, Smok na kołach wysoko nad wysadzoną wieżą"></a>
+            <figcaption><span class="chip">Przygoda</span>Smok na kołach wysoko nad wysadzoną wieżą</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/030-ang-ramp-long-1600.webp"><img src="../assets/img/shots/030-ang-ramp-long-640.webp" srcset="../assets/img/shots/030-ang-ramp-long-640.webp 640w, ../assets/img/shots/030-ang-ramp-long-960.webp 960w, ../assets/img/shots/030-ang-ramp-long-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Angry Cars, Ukształtuj rampę i startuj"></a>
-            <figcaption><span class="tag">Angry Cars</span>Ukształtuj rampę i startuj</figcaption>
+          <figure class="shot c-pink">
+            <a href="../assets/img/shots/030-ang-ramp-long-1600.webp"><img src="../assets/img/shots/030-ang-ramp-long-640.webp" srcset="../assets/img/shots/030-ang-ramp-long-640.webp 640w, ../assets/img/shots/030-ang-ramp-long-960.webp 960w, ../assets/img/shots/030-ang-ramp-long-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Angry Cars, Ukształtuj rampę i startuj"></a>
+            <figcaption><span class="chip">Angry Cars</span>Ukształtuj rampę i startuj</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/035-bat-racer-1600.webp"><img src="../assets/img/shots/035-bat-racer-640.webp" srcset="../assets/img/shots/035-bat-racer-640.webp 640w, ../assets/img/shots/035-bat-racer-960.webp 960w, ../assets/img/shots/035-bat-racer-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Arena bitew, Ślimak kontra Wyścigówka"></a>
-            <figcaption><span class="tag">Arena bitew</span>Ślimak kontra Wyścigówka</figcaption>
+          <figure class="shot c-pink">
+            <a href="../assets/img/shots/035-bat-racer-1600.webp"><img src="../assets/img/shots/035-bat-racer-640.webp" srcset="../assets/img/shots/035-bat-racer-640.webp 640w, ../assets/img/shots/035-bat-racer-960.webp 960w, ../assets/img/shots/035-bat-racer-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Arena bitew, Ślimak kontra Wyścigówka"></a>
+            <figcaption><span class="chip">Arena bitew</span>Ślimak kontra Wyścigówka</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/045-exp-intercept-1600.webp"><img src="../assets/img/shots/045-exp-intercept-640.webp" srcset="../assets/img/shots/045-exp-intercept-640.webp 640w, ../assets/img/shots/045-exp-intercept-960.webp 960w, ../assets/img/shots/045-exp-intercept-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Wybuchowy Rajd, Zatrzymaj spadającą rakietę w locie"></a>
-            <figcaption><span class="tag">Wybuchowy Rajd</span>Zatrzymaj spadającą rakietę w locie</figcaption>
+          <figure class="shot c-gold">
+            <a href="../assets/img/shots/045-exp-intercept-1600.webp"><img src="../assets/img/shots/045-exp-intercept-640.webp" srcset="../assets/img/shots/045-exp-intercept-640.webp 640w, ../assets/img/shots/045-exp-intercept-960.webp 960w, ../assets/img/shots/045-exp-intercept-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Wybuchowy Rajd, Zatrzymaj spadającą rakietę w locie"></a>
+            <figcaption><span class="chip">Wybuchowy Rajd</span>Zatrzymaj spadającą rakietę w locie</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/082-bri-build-truss-1600.webp"><img src="../assets/img/shots/082-bri-build-truss-640.webp" srcset="../assets/img/shots/082-bri-build-truss-640.webp 640w, ../assets/img/shots/082-bri-build-truss-960.webp 960w, ../assets/img/shots/082-bri-build-truss-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Chybotliwy Most, Zbuduj most ze sprężystych części"></a>
-            <figcaption><span class="tag">Chybotliwy Most</span>Zbuduj most ze sprężystych części</figcaption>
+          <figure class="shot c-cyan">
+            <a href="../assets/img/shots/082-bri-build-truss-1600.webp"><img src="../assets/img/shots/082-bri-build-truss-640.webp" srcset="../assets/img/shots/082-bri-build-truss-640.webp 640w, ../assets/img/shots/082-bri-build-truss-960.webp 960w, ../assets/img/shots/082-bri-build-truss-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Chybotliwy Most, Zbuduj most ze sprężystych części"></a>
+            <figcaption><span class="chip">Chybotliwy Most</span>Zbuduj most ze sprężystych części</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/091-fly-ramp-1600.webp"><img src="../assets/img/shots/091-fly-ramp-640.webp" srcset="../assets/img/shots/091-fly-ramp-640.webp 640w, ../assets/img/shots/091-fly-ramp-960.webp 960w, ../assets/img/shots/091-fly-ramp-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Flappy Car, Narysuj teren i zmieść się w szczelinie"></a>
-            <figcaption><span class="tag">Flappy Car</span>Narysuj teren i zmieść się w szczelinie</figcaption>
+          <figure class="shot c-violet">
+            <a href="../assets/img/shots/091-fly-ramp-1600.webp"><img src="../assets/img/shots/091-fly-ramp-640.webp" srcset="../assets/img/shots/091-fly-ramp-640.webp 640w, ../assets/img/shots/091-fly-ramp-960.webp 960w, ../assets/img/shots/091-fly-ramp-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Flappy Car, Narysuj teren i zmieść się w szczelinie"></a>
+            <figcaption><span class="chip">Flappy Car</span>Narysuj teren i zmieść się w szczelinie</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/094-gar-four-1600.webp"><img src="../assets/img/shots/094-gar-four-640.webp" srcset="../assets/img/shots/094-gar-four-640.webp 640w, ../assets/img/shots/094-gar-four-960.webp 960w, ../assets/img/shots/094-gar-four-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Garaż, Ostatnie auta: dotknij i jedź znowu"></a>
-            <figcaption><span class="tag">Garaż</span>Ostatnie auta: dotknij i jedź znowu</figcaption>
+          <figure class="shot c-violet">
+            <a href="../assets/img/shots/094-gar-four-1600.webp"><img src="../assets/img/shots/094-gar-four-640.webp" srcset="../assets/img/shots/094-gar-four-640.webp 640w, ../assets/img/shots/094-gar-four-960.webp 960w, ../assets/img/shots/094-gar-four-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Garaż, Ostatnie auta: dotknij i jedź znowu"></a>
+            <figcaption><span class="chip">Garaż</span>Ostatnie auta: dotknij i jedź znowu</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/096-adv-highway-1600.webp"><img src="../assets/img/shots/096-adv-highway-640.webp" srcset="../assets/img/shots/096-adv-highway-640.webp 640w, ../assets/img/shots/096-adv-highway-960.webp 960w, ../assets/img/shots/096-adv-highway-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Przygoda, Narysuj drogę ponad ruchem"></a>
-            <figcaption><span class="tag">Przygoda</span>Narysuj drogę ponad ruchem</figcaption>
+          <figure class="shot c-cyan">
+            <a href="../assets/img/shots/096-adv-highway-1600.webp"><img src="../assets/img/shots/096-adv-highway-640.webp" srcset="../assets/img/shots/096-adv-highway-640.webp 640w, ../assets/img/shots/096-adv-highway-960.webp 960w, ../assets/img/shots/096-adv-highway-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Przygoda, Narysuj drogę ponad ruchem"></a>
+            <figcaption><span class="chip">Przygoda</span>Narysuj drogę ponad ruchem</figcaption>
           </figure>
         </li>
         <li>
-          <figure>
-            <a href="../assets/img/shots/097-run-gulf-1600.webp"><img src="../assets/img/shots/097-run-gulf-640.webp" srcset="../assets/img/shots/097-run-gulf-640.webp 640w, ../assets/img/shots/097-run-gulf-960.webp 960w, ../assets/img/shots/097-run-gulf-1600.webp 1600w" sizes="(min-width: 1120px) 340px, (min-width: 700px) 46vw, calc(100vw - 32px)" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Rajd Śmierci, Skok nad przepaścią"></a>
-            <figcaption><span class="tag">Rajd Śmierci</span>Skok nad przepaścią</figcaption>
+          <figure class="shot c-gold">
+            <a href="../assets/img/shots/097-run-gulf-1600.webp"><img src="../assets/img/shots/097-run-gulf-640.webp" srcset="../assets/img/shots/097-run-gulf-640.webp 640w, ../assets/img/shots/097-run-gulf-960.webp 960w, ../assets/img/shots/097-run-gulf-1600.webp 1600w" sizes="(min-width: 1100px) 370px, (min-width: 720px) 45vw, 84vw" width="640" height="360" loading="lazy" decoding="async" alt="Zrzut ekranu: Rajd Śmierci, Skok nad przepaścią"></a>
+            <figcaption><span class="chip">Rajd Śmierci</span>Skok nad przepaścią</figcaption>
           </figure>
         </li>
       </ul>
+      <p class="swipe-hint">Przesuń w bok, aby zobaczyć więcej.</p>
     </div>
   </section>
 
   <section class="section" id="more" aria-labelledby="more-title">
     <div class="wrap">
-      <h2 id="more-title">W grze jest też</h2>
+      <div class="section-head">
+        <p class="kicker">To nie wszystko</p>
+        <h2 id="more-title">W grze jest też</h2>
+      </div>
       <ul class="facts">
-        <li class="card"><strong>Garaż</strong><span>Ostatnie auta czekają w garażu. Dotknij auta i jedź znowu.</span></li>
-        <li class="card"><strong>Zębatki</strong><span>Nowe auto kosztuje zębatki. Brakuje ich? Jeśli chcesz, obejrzyj film: daje 30&nbsp;000 zębatek.</span></li>
-        <li class="card"><strong>Codzienne losowanie</strong><span>Darmowy obrót każdego dnia.</span></li>
-        <li class="card"><strong>Bez wyskakujących reklam</strong><span>Żadnych banerów ani wyskakujących okienek. Jedyne reklamy to filmy, które sam wybierasz, żeby dostać nagrodę.</span></li>
-        <li class="card wide"><strong>15 języków</strong><span>English, Polski, Deutsch, Français, Español, Italiano, Português (BR), Русский, Українська, Türkçe, Bahasa Indonesia, Tiếng Việt, 日本語, 한국어, 简体中文.</span></li>
+        <li class="fact c-cyan"><span class="icon"><svg class="i" aria-hidden="true"><use href="#i-garage"/></svg></span><div><strong>Garaż</strong><span>Ostatnie auta czekają w garażu. Dotknij auta i jedź znowu.</span></div></li>
+        <li class="fact c-gold"><span class="icon"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></span><div><strong>Zębatki</strong><span>Nowe auto kosztuje zębatki. Brakuje ich? Jeśli chcesz, obejrzyj film za stałą liczbę zębatek, podaną przed startem.</span></div></li>
+        <li class="fact c-pink"><span class="icon"><svg class="i" aria-hidden="true"><use href="#i-spin"/></svg></span><div><strong>Codzienne losowanie</strong><span>Darmowy obrót każdego dnia.</span></div></li>
+        <li class="fact c-violet"><span class="icon"><svg class="i" aria-hidden="true"><use href="#i-video"/></svg></span><div><strong>Bez wyskakujących reklam</strong><span>Żadnych banerów ani wyskakujących okienek. Jedyne reklamy to filmy, które sam wybierasz, żeby dostać nagrodę.</span></div></li>
+        <li class="fact c-cyan wide"><span class="icon"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span><div><strong>15 języków</strong><span class="langs">English, Polski, Deutsch, Français, Español, Italiano, Português (BR), Русский, Українська, Türkçe, Bahasa Indonesia, Tiếng Việt, 日本語, 한국어, 简体中文.</span></div></li>
       </ul>
     </div>
   </section>
 
-  <section class="section final" aria-labelledby="final-title">
+  <section class="final" aria-labelledby="final-title">
     <div class="wrap">
+      <div class="banner"><img src="../assets/img/feature-1024.webp" srcset="../assets/img/feature-640.webp 640w, ../assets/img/feature-1024.webp 1024w" sizes="(min-width: 936px) 880px, calc(100vw - 32px)" width="1024" height="500" loading="lazy" decoding="async" alt="BUILD &amp; RIDE: Draw a car. Ride it. Neonowy ołówek rysuje auto, a wokół rakieta, rękawica bokserska i wybuch."></div>
       <h2 id="final-title">Gotów narysować swoje pierwsze auto?</h2>
       <div class="cta">
         <!-- Gdy strona gry w Google Play będzie gotowa, zamień poniższy span na:
@@ -240,7 +293,10 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p>&copy; 2026 BUILD &amp; RIDE</p>
+    <div>
+      <p><a class="brand" href="./"><img src="../assets/img/icon-96.webp" width="36" height="36" alt="" loading="lazy">BUILD &amp; RIDE</a></p>
+      <p class="small">&copy; 2026 BUILD &amp; RIDE &middot; Nagłówki: Open Sans (<a href="../assets/fonts/LICENSE.txt" hreflang="en">licencja Apache 2.0</a>)</p>
+    </div>
     <ul>
       <li><a href="../privacy.html" hreflang="en">Polityka prywatności (po angielsku)</a></li>
       <li><a href="https://github.com/Raaafal/raaafal.github.io/issues">Kontakt (GitHub Issues)</a></li>

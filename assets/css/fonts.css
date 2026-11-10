@@ -1,0 +1,9 @@
+/* The game's heading font: Open Sans Bold (Apache License 2.0, see ../fonts/LICENSE.txt).
+   Kept out of site.css so that pages whose security policy allows no fonts (404.html) never request it. */
+@font-face {
+  font-family: "Open Sans Site";
+  src: url("../fonts/open-sans-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
