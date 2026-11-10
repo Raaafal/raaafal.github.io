@@ -1,0 +1,11 @@
+# app-ads.txt for BUILD & RIDE (Android, pl.favourite.drawandride)
+#
+# This file has no entries yet. The developer adds one line with their own AdMob
+# publisher id (AdMob shows it under Apps > View all apps > app-ads.txt):
+#
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+#
+# To do so: copy the line above without the leading "# ", put the real publisher
+# id in place of pub-XXXXXXXXXXXXXXXX, commit and push. The file must stay at the
+# root of the site (https://raaafal.github.io/app-ads.txt), and the same site must
+# be the developer website in the Google Play listing.
