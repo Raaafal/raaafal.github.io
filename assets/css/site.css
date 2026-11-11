@@ -807,6 +807,247 @@ h3 {
   }
 }
 
+/* ------------------------------------------------------------------ the screenshot viewer (assets/js/gallery.js) */
+
+html.lb-open {
+  overflow: hidden;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  background: rgba(7, 3, 20, 0.97);
+  overflow: hidden;
+}
+
+.lightbox[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+/* the dialog itself covers the whole screen */
+.lightbox::backdrop {
+  background: transparent;
+}
+
+.lb-bar,
+.lb-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.lb-bar {
+  padding-top: max(10px, env(safe-area-inset-top));
+  padding-bottom: 4px;
+}
+
+.lb-foot {
+  padding-top: 8px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+
+.lb-count {
+  margin: 0;
+  color: var(--muted);
+  font: 700 0.9rem/1 var(--display);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lb-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lb-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.lb-btn .i {
+  width: 24px;
+  height: 24px;
+}
+
+.lb-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 6px var(--gutter);
+  container-type: size;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* as large as the stage allows, always 16:9 (all the screenshots are), so the small picture shown while the
+   large one loads takes the same place */
+.lb-img {
+  width: 100%;
+  width: min(100cqw, 100cqh * 16 / 9);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--bg-2);
+  box-shadow: 0 0 0 2px var(--accent), 0 20px 70px -20px var(--accent);
+  transition: transform 0.2s ease;
+  -webkit-user-drag: none;
+}
+
+.lb-img.is-dragging {
+  transition: none;
+}
+
+.lb-img.from-next {
+  animation: lb-from-next 0.24s ease-out;
+}
+
+.lb-img.from-prev {
+  animation: lb-from-prev 0.24s ease-out;
+}
+
+@keyframes lb-from-next {
+  from {
+    opacity: 0.35;
+    transform: translateX(36px);
+  }
+}
+
+@keyframes lb-from-prev {
+  from {
+    opacity: 0.35;
+    transform: translateX(-36px);
+  }
+}
+
+.lb-stage.is-loading .lb-img {
+  opacity: 0;
+}
+
+.lb-stage.is-loading::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 3px solid rgba(255, 255, 255, 0.16);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: lb-spin 0.8s linear infinite;
+}
+
+@keyframes lb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* room for a caption of two lines, so the picture does not jump from one screenshot to the next */
+.lb-cap {
+  flex: 1;
+  min-width: 0;
+  min-height: 4.4rem;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.lb-cap .chip {
+  margin: 0 auto 6px;
+}
+
+/* wider screens (and phones on their side): the arrows sit beside the picture */
+@media (min-width: 720px) {
+  .lb-stage {
+    padding: 8px 92px;
+  }
+
+  .lb-prev,
+  .lb-next {
+    position: absolute;
+    top: 50%;
+    width: 56px;
+    height: 56px;
+    margin-top: -28px;
+  }
+
+  .lb-prev {
+    left: max(20px, env(safe-area-inset-left));
+  }
+
+  .lb-next {
+    right: max(20px, env(safe-area-inset-right));
+  }
+
+  .lb-cap {
+    min-height: 0;
+  }
+}
+
+/* phones on their side: little height, so the caption takes one line */
+@media (max-height: 560px) {
+  .lb-bar {
+    padding-top: max(6px, env(safe-area-inset-top));
+    padding-bottom: 0;
+  }
+
+  .lb-foot {
+    padding-top: 4px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .lb-cap {
+    min-height: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lb-cap .chip {
+    display: inline-block;
+    margin: 0 8px 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-img,
+  .lb-img.from-next,
+  .lb-img.from-prev {
+    animation: none;
+    transition: none;
+  }
+
+  .lb-stage.is-loading::after {
+    animation-duration: 2.4s;
+  }
+}
+
 /* ------------------------------------------------------------------ the privacy policy */
 
 .doc {
